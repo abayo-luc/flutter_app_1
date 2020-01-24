@@ -15,24 +15,48 @@ class _MyAppState extends State<MyApp> {
   final _questions = const [
     {
       'question': 'What\'s your favorite color?',
-      'answers': ['Black', 'Red', 'Green', 'White']
+      'answers': [
+        {'text': 'Black', 'score': 10},
+        {'text': 'Red', 'score': 8},
+        {'text': 'Green', 'score': 3},
+        {'text': 'White', 'score': 1}
+      ]
     },
     {
       'question': 'What\'s your favorite animal?',
-      'answers': ['Rabbit', 'Snake', 'Elephant', 'Lion']
+      'answers': [
+        {'text': 'Rabbit', 'score': 1},
+        {'text': 'Snake', 'score': 10},
+        {'text': 'Elephant', 'score': 3},
+        {'text': 'Lion', 'score': 8}
+      ]
     },
     {
       'question': 'What\'s your favorite instructor?',
-      'answers': ['Musigwa', 'Caleb', 'Manzi', 'Luc']
+      'answers': [
+        {'text': 'Musigwa', 'score': 2},
+        {'text': 'Caleb', 'score': 5},
+        {'text': 'Manzi', 'score': 4},
+        {'text': 'Luc', 'score': 1}
+      ]
     }
   ];
   var _questionIndex = 0;
-  void _handleAnswer() {
+  var _totalScroe = 0;
+  void _handleAnswer(int score) {
+    _totalScroe += score;
     if (_questionIndex < _questions.length) {
       setState(() {
         _questionIndex = _questionIndex + 1;
       });
     }
+  }
+
+  void _resetQuiz() {
+    _totalScroe = 0;
+    setState(() {
+      _questionIndex = 0;
+    });
   }
 
   @override
@@ -45,7 +69,7 @@ class _MyAppState extends State<MyApp> {
                   questions: _questions,
                   questionIndex: _questionIndex,
                   handleAnswer: _handleAnswer)
-              : Results()),
+              : Results(_totalScroe, _resetQuiz)),
     );
   }
 }
